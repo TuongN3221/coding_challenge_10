@@ -1,0 +1,1 @@
+# This is the repository for JavaScript Coding Challenge #10
