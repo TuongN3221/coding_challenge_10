@@ -33,7 +33,7 @@ class Order {
     getOrderDetails(){
         const totalPrice = this.product.price * this.quantity
         return `Order ID: ${this.orderId}, Product: ${this.product.name}, Quantity: ${this.quantity}, Total Price: $${totalPrice}`;
-    }
+    }// Calculates the total price of the order from arrays in this class and in the Product class
 };
 const order1 = new Order(501, prod1, 2);
 console.log(order1.getOrderDetails()); 
@@ -71,8 +71,7 @@ class Inventory {
     }    
     listOrders(){
         this.orders.forEach(order => console.log(order.getOrderDetails()))
-    }
-
+    }// Iterates through the order array and logs the details of each order to console
 }
 // Task 3 Test Case
 const inventory = new Inventory();
