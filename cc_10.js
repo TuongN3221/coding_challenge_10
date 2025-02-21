@@ -57,13 +57,13 @@ class Inventory {
     addProduct(product){
         this.products.push(product);
     }
-    listProducts() {
-        this.products.forEach(product => console.log(product.getDetails()))
+    listProducts(){
+        this.products.forEach(product => console.log(product.getDetails()));
     }
     placeOrder(orderId, product, quantity){
         if (product.stock > quantity) {
             const order = new Order(orderId, product, quantity)// Creates a new order and adds it to the order list if stock is available
-            this.orders.push(order)
+            this.orders.push(order)// Adds order to the orders array
         }//If stock is greater than order quantity, creates a new Order object and adds it to orders array
         else {
             console.log(`Order ${orderId} Failed: Insufficient stock for ${product.name}.`)
@@ -72,6 +72,28 @@ class Inventory {
     listOrders(){
         this.orders.forEach(order => console.log(order.getOrderDetails()))
     }// Iterates through the order array and logs the details of each order to console
+// Task 5 - Implementing Product Restocking
+    addProduct(product) {
+        this.products.push(product)
+    }
+    placeOrder(orderId, product, quantity){
+        if(product.stock >= quantity) {//Checks if there is enough stock for order
+            const order = new Order(orderId, product, quantity);
+            this.orders.push(order);// 
+        }
+        else {
+            console.log(`Order ${orderId} failed: Insufficient Stock for ${product.name}`);
+        }
+    }
+    restockProduct(productId, quantity) {
+        const product = this.products.find(prod => prod.id === productId);// Finds the product to be restocked by ID
+        if (product) {
+            product.stock += quantity;
+            console.log(`${product.name} restocked. New Stock: ${product.stock}`);// Logs the product that is restocked
+        } else {
+            console.log(`Product ID ${productId} not found.`);// Logs error if product not is not found
+        }
+    }
 }
 // Task 3 Test Case
 const inventory = new Inventory();
@@ -84,3 +106,7 @@ inventory.listOrders();
 // Expected output: "Order ID: 601, Product: Laptop, Quantity: 2, Total Price: $2400"
 console.log(prod1.getDetails());
 // Expected output: "Product: Laptop, ID: 101, Price: $1200, Stock: 3"
+// Task 5 Test Cases
+inventory.restockProduct(101, 5);
+console.log(prod1.getDetails()); 
+// Expected output: "Product: Laptop, ID: 101, Price: $1200, Stock: 8"
