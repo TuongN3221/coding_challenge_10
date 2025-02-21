@@ -12,7 +12,7 @@ class Product {
     updateStock(quantity){
        if(quantity > this.stock) {
         return`Not Enough Available Stock For This Item`; 
-       }// Determines if there is enough stock for the order to fill
+       }// Determines if there is enough stock for the order to be fulfilled
        this.stock -= quantity;// Reduces stock by quantity when order is placed
     }
 };
@@ -33,7 +33,7 @@ class Order {
     getOrderDetails(){
         const totalPrice = this.product.price * this.quantity
         return `Order ID: ${this.orderId}, Product: ${this.product.name}, Quantity: ${this.quantity}, Total Price: $${totalPrice}`;
-    }// Calculates the total price of the order from arrays in this class and in the Product class
+    }// Calculates the total price of the order from arrays in this class and in the Order Class
 };
 const order1 = new Order(501, prod1, 2);
 console.log(order1.getOrderDetails()); 
@@ -45,7 +45,7 @@ console.log(prod1.getDetails());
 class Inventory {
     constructor() {
         this.products = []
-    }
+    }// Sets up empty product array
     addProducts(product) {
         this.products.push(product);// Adds new product to the inventory from the Order class
     }
@@ -79,11 +79,11 @@ class Inventory {
     placeOrder(orderId, product, quantity){
         if(product.stock >= quantity) {//Checks if there is enough stock for order
             const order = new Order(orderId, product, quantity);
-            this.orders.push(order);// 
+            this.orders.push(order);
         }
         else {
             console.log(`Order ${orderId} failed: Insufficient Stock for ${product.name}`);
-        }
+        }// Logs error that order cannot be fulfilled from lack of stock
     }
     restockProduct(productId, quantity) {
         const product = this.products.find(prod => prod.id === productId);// Finds the product to be restocked by ID
@@ -98,15 +98,11 @@ class Inventory {
 // Task 3 Test Case
 const inventory = new Inventory();
 inventory.addProduct(prod1);
-inventory.listProducts();
-// Expected output: "Product: Laptop, ID: 101, Price: $1200, Stock: 5"
+inventory.listProducts();// Expected output: "Product: Laptop, ID: 101, Price: $1200, Stock: 5"
 // Task 4 Test Cases
 inventory.placeOrder(601, prod1, 2);
-inventory.listOrders();
-// Expected output: "Order ID: 601, Product: Laptop, Quantity: 2, Total Price: $2400"
-console.log(prod1.getDetails());
-// Expected output: "Product: Laptop, ID: 101, Price: $1200, Stock: 3"
+inventory.listOrders();// Expected output: "Order ID: 601, Product: Laptop, Quantity: 2, Total Price: $2400"
+console.log(prod1.getDetails());// Expected output: "Product: Laptop, ID: 101, Price: $1200, Stock: 3"
 // Task 5 Test Cases
 inventory.restockProduct(101, 5);
-console.log(prod1.getDetails()); 
-// Expected output: "Product: Laptop, ID: 101, Price: $1200, Stock: 8"
+console.log(prod1.getDetails()); // Expected output: "Product: Laptop, ID: 101, Price: $1200, Stock: 8"
